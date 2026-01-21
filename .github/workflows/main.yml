@@ -1,0 +1,29 @@
+
+name: Deploy With Approval
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build app
+        run: echo "Building application..."
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    # 🔥 This is the key: requires approval from the environment
+    environment:
+      name: production
+
+    steps:
+      - name: Deploy
+        run: echo "🚀 Deploying to production..."
